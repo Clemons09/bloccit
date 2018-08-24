@@ -1,21 +1,15 @@
 require 'random_data'
 
  # Create Posts
- 50.times do
- # #1
-   Post.create!(
- # #2
-     title:  RandomData.random_sentence,
-     body:   RandomData.random_paragraph
-   )
- end
+50.times do
+    Post.create!(
+         topic: topics.sample,
+         title: RandomData.random_sentence,
+         body:  RandomData.random_paragraph
+    )
+end
 
-Post.find_or_create_by!(
-         title: "the week rushed by",
-         body: "it's weird how I lose track of time sometimes"
-)
-
- posts = Post.all
+posts = Post.all
  
  # Create Comments
  # #3
@@ -26,11 +20,6 @@ Post.find_or_create_by!(
      body: RandomData.random_paragraph
    )
  end
-
- Comment.find_or_create_by!(
-       post: Post.find(101),
-       body: "music makes the world go round"
-)
 
  10.times do
  	Advertisement.create!(
@@ -46,8 +35,17 @@ Post.find_or_create_by!(
         resolved: false 
     )
 end
+
+115.times do
+    Topic.create!(
+        name:         RandomData.random_sentence,
+        description:  RandomData.random_paragraph
+    )
+end
+topics = Topic.all
  
  puts "Seed finished"
+ puts "#{Topic.count} topics created"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
  puts "#{Advertisement.count} advertisements created"
