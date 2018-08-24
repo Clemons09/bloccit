@@ -31,7 +31,24 @@ Post.find_or_create_by!(
        post: Post.find(101),
        body: "music makes the world go round"
 )
+
+ 10.times do
+ 	Advertisement.create!(
+ 		title: RandomData.random_sentence,
+ 		copy: RandomData.random_paragraph
+ 		)
+ end
+
+ 100.times do
+    Question.create!(
+        title: RandomData.random_sentence,
+        body:  RandomData.random_paragraph,
+        resolved: false 
+    )
+end
  
  puts "Seed finished"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
+ puts "#{Advertisement.count} advertisements created"
+ puts "#{Question.count} questions created"
