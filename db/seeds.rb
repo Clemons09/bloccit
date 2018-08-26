@@ -21,21 +21,6 @@ posts = Post.all
    )
  end
 
- 10.times do
- 	Advertisement.create!(
- 		title: RandomData.random_sentence,
- 		copy: RandomData.random_paragraph
- 		)
- end
-
- 100.times do
-    Question.create!(
-        title: RandomData.random_sentence,
-        body:  RandomData.random_paragraph,
-        resolved: false 
-    )
-end
-
 115.times do
     Topic.create!(
         name:         RandomData.random_sentence,
@@ -48,5 +33,3 @@ topics = Topic.all
  puts "#{Topic.count} topics created"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
- puts "#{Advertisement.count} advertisements created"
- puts "#{Question.count} questions created"
