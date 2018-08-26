@@ -1,3 +1,4 @@
+
 require 'rails_helper'
 include RandomData
  RSpec.describe QuestionsController, type: :controller do
@@ -8,7 +9,10 @@ include RandomData
          body: RandomData.random_paragraph,
          resolved: false
          )
-    end 
+    end
+
+   
+=begin
      describe "GET #index" do
       it "returns http success" do
         get :index
@@ -122,4 +126,7 @@ include RandomData
         expect(response).to redirect_to questions_path
        end
     end
+=end
+
  end
+
