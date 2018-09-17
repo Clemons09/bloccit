@@ -18,56 +18,94 @@ require 'rails_helper'
    it { is_expected.to have_secure_password }
    it { is_expected.to validate_length_of(:password).is_at_least(6) }
  
-   describe "attributes" do
-     it "should have name and email attributes" do
-       expect(user).to have_attributes(name: "Cody", email: "clemons9988@gmail.com")
-     end
-   end
- 
-   describe "invalid user" do
-     let(:user_with_invalid_name) { User.new(name: "", email: "clemons9988@gmail.com") }
-     let(:user_with_invalid_email) { User.new(name: "Cody", email: "") }
- 
-     it "should be an invalid user due to blank name" do
-       expect(user_with_invalid_name).to_not be_valid
-     end
- 
-    it "should be an invalid user due to blank email" do
-      expect(user_with_invalid_email).to_not be_valid
+    describe "attributes" do
+        it "should have name and email attributes" do
+            expect(user).to have_attributes(name: "Cody", email: "clemons9988@gmail.com")
+        end
+        
+        it "responds to role" do
+            expect(user).to respond_to(:role)
+        end
+        
+        it "responds to admin?" do
+            expect(user).to respond_to(:admin?)
+        end
+        
+        it "responds to member?" do
+            expect(user).to respond_to(:member?)
+        end
+        
+        it "responds to moderator?" do
+            expect(user).to respond_to(:moderator?)
+        end
     end
-     it "responds to role" do
-      expect(user).to respond_to(:role)
+    
+    describe "roles" do
+        it "is member by default" do
+            expect(user.role).to eq("member")
+        end
+        
+        context "member user" do
+            it "returns true for #member?" do
+                expect(user.member?).to be_truthy
+            end
+            
+            it "returns false for #admin?" do
+                expect(user.admin?).to be_falsey
+            end
+            
+            it "returns false for #moderator?" do
+                expect(user.moderator?).to be_falsey
+            end
+        end
+        
+        context "admin user" do
+            before do
+                user.admin!
+            end
+            
+            it "returns false for #member?" do
+                expect(user.member?).to be_falsey
+            end
+            
+            it "returns true for #admin?" do
+                expect(user.admin?).to be_truthy
+            end
+            
+            it "returns false for #moderator?" do
+                expect(user.moderator?).to be_falsey
+            end
+        end
+        
+        context "moderator user" do
+            before do
+                user.moderator!
+            end
+            
+            it "returns false for #member?" do
+                expect(user.member?).to be_falsey
+            end
+            
+            it "returns false for #admin?" do
+                expect(user.admin?).to be_falsey
+            end
+            
+            it "returns true for #moderator?" do
+                expect(user.moderator?).to be_truthy
+            end
+        end
     end
-     it "responds to admin?" do
-      expect(user).to respond_to(:admin?)
+    
+    describe "invalid user" do
+        let(:user_with_invalid_name) { User.new(name: "", email: "user@bloccit.com") }
+        let(:user_with_invalid_email) { User.new(name: "Bloccit User", email: "") }
+        
+        it "should be an invalid user due to blank name" do
+            expect(user_with_invalid_name).to_not be_valid
+        end
+        
+        it "should be an invalid user due to blank email" do
+            expect(user_with_invalid_email).to_not be_valid
+        end
     end
-     it "responds to member?" do
-      expect(user).to respond_to(:member?)
-    end
-  end
-   describe "roles" do
-    it "is member by default" do
-      expect(user.role).to eql("member")
-    end
-     context "member user" do
-      it "returns true for #member?" do
-        expect(user.member?).to be_truthy
-      end
-       it "returns false for #admin" do
-        expect(user.admin?).to be_falsey
-      end
-    end
-     context "admin user" do
-      before do
-        user.admin!
-      end
-      
-      it "return true for #admin?" do
-        expect(user.admin?).to be_truthy
-      end
-       it "returns false for #member" do
-        expect(user.member?).to be_falsey
-      end
-    end
-  end
  end
